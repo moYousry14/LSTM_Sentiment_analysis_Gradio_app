@@ -1,1 +1,1 @@
-python Gradio.py
+web: python Gradio.py
