@@ -51,4 +51,4 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     predict_btn.click(fn=predict_sentiment, inputs=input_text, outputs=[output_text, history_box])
     clear_btn.click(fn=lambda: ("", "", ""), inputs=[], outputs=[input_text, output_text, history_box])
 
-demo.launch()
+demo.launch(share=True)
