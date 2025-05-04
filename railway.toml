@@ -1,0 +1,6 @@
+[build]
+builder = "heroku/buildpacks:20"
+
+[deploy]
+startCommand = "python Gradio.py"
+
