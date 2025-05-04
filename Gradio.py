@@ -4,17 +4,14 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 import datetime
 
-# تحميل الموديل
 model = tf.keras.models.load_model("sentiment_model.h5")
 
-# تحميل الـ tokenizer
 with open("tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 
 maxlen = 100
-history = []  # سجل التوقعات
+history = []  #
 
-# دالة التنبؤ
 def predict_sentiment(text):
     seq = tokenizer.texts_to_sequences([text])
     padded = pad_sequences(seq, maxlen=maxlen)
@@ -27,13 +24,11 @@ def predict_sentiment(text):
     else:
         result = f"😠 Negative ({1 - pred:.2f})"
     
-    # أضف للتاريخ
     history.append(f"[{timestamp}] {text.strip()} → {result}")
-    log = "\n\n".join(reversed(history[-5:]))  # آخر 5 فقط
+    log = "\n\n".join(reversed(history[-5:]))  
     
     return result, log
 
-# واجهة Gradio
 with gr.Blocks(theme=gr.themes.Soft()) as demo:
     gr.Markdown("## 🍽️ Restaurant Review Sentiment Analyzer")
     gr.Markdown("Enter a review and get the sentiment prediction from our LSTM model.")
@@ -51,4 +46,4 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     predict_btn.click(fn=predict_sentiment, inputs=input_text, outputs=[output_text, history_box])
     clear_btn.click(fn=lambda: ("", "", ""), inputs=[], outputs=[input_text, output_text, history_box])
 
-demo.launch(share=True)
+demo.launch()
