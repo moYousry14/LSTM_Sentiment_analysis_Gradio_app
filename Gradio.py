@@ -24,13 +24,11 @@ def predict_sentiment(text):
     else:
         result = f"😠 Negative ({1 - pred:.2f})"
     
-    # أضف للتاريخ
     history.append(f"[{timestamp}] {text.strip()} → {result}")
     log = "\n\n".join(reversed(history[-5:]))  
     
     return result, log
 
-# واجهة Gradio
 with gr.Blocks(theme=gr.themes.Soft()) as demo:
     gr.Markdown("## 🍽️ Restaurant Review Sentiment Analyzer")
     gr.Markdown("Enter a review and get the sentiment prediction from our LSTM model.")
