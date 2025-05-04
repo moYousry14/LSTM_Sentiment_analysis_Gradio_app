@@ -4,17 +4,14 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 import datetime
 
-# تحميل الموديل
 model = tf.keras.models.load_model("sentiment_model.h5")
 
-# تحميل الـ tokenizer
 with open("tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 
 maxlen = 100
-history = []  # سجل التوقعات
+history = []  #
 
-# دالة التنبؤ
 def predict_sentiment(text):
     seq = tokenizer.texts_to_sequences([text])
     padded = pad_sequences(seq, maxlen=maxlen)
@@ -29,7 +26,7 @@ def predict_sentiment(text):
     
     # أضف للتاريخ
     history.append(f"[{timestamp}] {text.strip()} → {result}")
-    log = "\n\n".join(reversed(history[-5:]))  # آخر 5 فقط
+    log = "\n\n".join(reversed(history[-5:]))  
     
     return result, log
 
